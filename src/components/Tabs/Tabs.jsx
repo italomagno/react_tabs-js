@@ -1,3 +1,5 @@
+/* eslint-disable no-nested-ternary */
+/* eslint-disable max-len */
 export const Tabs = ({ tabs, activeTabId, onTabSelected }) => {
   const activeTab = tabs.find(tab => tab.id === activeTabId);
 
@@ -8,12 +10,22 @@ export const Tabs = ({ tabs, activeTabId, onTabSelected }) => {
           {tabs.map(tab => (
             <li
               key={tab.id}
-              className={tab.id === activeTabId ? 'is-active' : ''}
+              className={
+                activeTab
+                  ? tab.id === activeTabId
+                    ? 'is-active'
+                    : ''
+                  : tabs[0].id === tab.id
+                    ? 'is-active'
+                    : ''
+              }
               data-cy="Tab"
             >
               <a
                 href={`#${tab.id}`}
-                onClick={() => onTabSelected(tab.id)}
+                onClick={() =>
+                  tab.id !== activeTabId ? onTabSelected(tab.id) : undefined
+                }
                 data-cy="TabLink"
               >
                 {tab.title}
